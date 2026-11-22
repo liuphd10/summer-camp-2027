@@ -1,7 +1,8 @@
 {
-  "lastChecked": "2026-11-22",
+  "lastChecked": "2026-11-23",
   "log": [
-    "2026-11-22　建立頁面。CTY 2027 時程來自第三方整理（官網尚未上線）；MathPath 2027 申請資料尚未公布；TANG 2027 已公布日期 7/1–7/5，報名尚未開放。"
+    "2026-11-22　建立頁面。CTY 2027 時程來自第三方整理（官網尚未上線）；MathPath 2027 申請資料尚未公布；TANG 2027 已公布日期 7/1–7/5，報名尚未開放。",
+    "2026-11-23　拿掉 TANG，改放 Duke Pre-College（2027 日期與費用已公布，12 月開放報名）；新增 Davidson Institute 整理的其他營隊清單。"
   ],
   "timeline": [
     {
@@ -15,12 +16,6 @@
       "date": "2027-02-28",
       "camp": "MathPath",
       "what": "全額付清折 $200（早鳥第一階段）",
-      "src": "prev"
-    },
-    {
-      "date": "2027-04-10",
-      "camp": "TANG",
-      "what": "早鳥報名截止（住宿方案省 $50）",
       "src": "prev"
     },
     {
@@ -42,12 +37,6 @@
       "src": "3rd"
     },
     {
-      "date": "2027-05-29",
-      "camp": "TANG",
-      "what": "一般報名截止",
-      "src": "prev"
-    },
-    {
       "date": "2027-05-31",
       "camp": "MathPath",
       "what": "取消可幾乎全額退費的期限",
@@ -60,28 +49,69 @@
       "src": "3rd"
     },
     {
-      "date": "2027-06-12",
-      "camp": "TANG",
-      "what": "住宿方案逾期報名截止",
-      "src": "prev"
-    },
-    {
       "date": "2027-06-27",
       "camp": "CTY",
       "what": "Summer A 開課（6/27–7/16）",
       "src": "3rd"
     },
     {
-      "date": "2027-07-01",
-      "camp": "TANG",
-      "what": "營隊開始（7/1–7/5）",
-      "src": "off"
-    },
-    {
       "date": "2027-07-18",
       "camp": "CTY",
       "what": "Summer B 開課（7/18–8/6）",
       "src": "3rd"
+    },
+    {
+      "date": "2026-12-01",
+      "approx": "12 月",
+      "camp": "Duke",
+      "what": "2027 夏季課程開放報名",
+      "src": "off"
+    },
+    {
+      "date": "2027-04-01",
+      "camp": "Duke",
+      "what": "押金 $500 的最後一天（4/2 起押金變 $1,500）",
+      "src": "off",
+      "type": "early"
+    },
+    {
+      "date": "2027-05-01",
+      "camp": "Duke",
+      "what": "取消只扣部分費用的最後一天（5/2 起取消收全額）",
+      "src": "off",
+      "type": "refund"
+    },
+    {
+      "date": "2027-05-13",
+      "camp": "Duke",
+      "what": "第 1 梯次付清全額（開課前 30 天，沒付會被取消）",
+      "src": "off",
+      "type": "deadline"
+    },
+    {
+      "date": "2027-06-01",
+      "camp": "Duke",
+      "what": "上傳疫苗證明截止",
+      "src": "off",
+      "type": "deadline"
+    },
+    {
+      "date": "2027-06-12",
+      "camp": "Duke",
+      "what": "第 1 梯次開課（6/12–6/23）",
+      "src": "off"
+    },
+    {
+      "date": "2027-06-27",
+      "camp": "Duke",
+      "what": "第 2 梯次開課（6/27–7/8）",
+      "src": "off"
+    },
+    {
+      "date": "2027-07-12",
+      "camp": "Duke",
+      "what": "第 3 梯次開課（7/12–7/23）",
+      "src": "off"
     }
   ],
   "camps": [
@@ -213,64 +243,188 @@
       ]
     },
     {
-      "name": "TANG",
-      "full": "Taiwanese American Next Generation（台美下一代夏令營，家庭共同參加）",
-      "status": "tbd",
-      "statusText": "2027 日期已公布，報名尚未開放",
+      "name": "Duke",
+      "full": "Duke University Pre-College（原 Continuing Studies 夏季營隊，給 6–12 年級）",
+      "status": "soon",
+      "statusText": "預計 2026 年 12 月開放報名",
       "rows": [
         [
           "開放報名",
-          "尚未公布",
-          null,
+          "2026 年 12 月。官網說正在更換付款系統，所以延後開放；可先填資料表，開放時會寄信通知",
+          "off",
           true
         ],
         [
           "報名截止",
-          "尚未公布。2026 年：早鳥 4/10、一般 5/29、逾期 6/12（住宿）；走讀一般 5/29、逾期 6/20",
-          "prev",
+          "沒有公布截止日，額滿為止。開課前 30 天要付清全額",
+          "off",
           true
         ],
         [
           "早鳥優惠",
-          "2026 年早鳥價比一般價便宜 $50；第一次參加的家庭另折 $50",
-          "prev"
+          "沒有早鳥價。4/1 前報名押金 $500，4/2 起押金 $1,500（押金不退）",
+          "off"
         ],
         [
           "活動日期",
-          "2027/7/1–7/5（五天四夜）",
+          "第 1 梯次 6/12–6/23<br>第 2 梯次 6/27–7/8<br>第 3 梯次 7/12–7/23<br>每梯 8 個全天加 2 個半天，週末也上課",
           "off"
         ],
         [
           "費用",
-          "2026 年住宿方案（早鳥/一般/逾期）：Junior High $320 / $370 / $420；家長 $460 / $510 / $560；寢具包 $22",
-          "prev"
-        ],
-        [
-          "地點",
-          "官網未明列。2026 年的貼文提到 WCU（賓州 West Chester University）",
-          "prev"
-        ],
-        [
-          "名額",
-          "各組有上限，先到先得，額滿候補",
+          "住宿 $6,300；走讀 $4,550（只有初中組有走讀）。疫苗費約 $150–$250 另計。不提供個人獎學金",
           "off"
         ],
         [
-          "資格",
-          "Junior High 組為 6–8 年級，依營隊前最後完成的年級分組"
-        ]
-      ],
-      "note": "未滿 18 歲須由已報名的家長、監護人或 21 歲以上成人陪同，所以至少需要一位大人一起報名。Junior High 組不提供走讀。",
-      "links": [
-        [
-          "TANG 報名頁",
-          "https://www.tangeneration.org/registration"
+          "地點",
+          "北卡羅來納州 Durham 的 Duke University 校園",
+          "off"
         ],
         [
-          "TANG 官網",
-          "https://www.tangeneration.org/"
+          "名額",
+          "官網未公布",
+          null
+        ],
+        [
+          "資格",
+          "現讀 6–8 年級，至少讀完一年初中；開課時滿 11 歲；GPA 3.0 以上。住宿要開課時滿 13 歲",
+          "off"
+        ]
+      ],
+      "note": "12 歲如果開課前還沒滿 13 歲，只能選走讀（早上 8:30 送到、下午 5:00 接回），所以家裡要住在 Durham 附近。2027 年沒有線上課程。初中組每梯次有 6 門課，例如 Mock Trial、Forensic Science、Engineering 101、Creative Writing。",
+      "links": [
+        [
+          "Duke Pre-College 官網",
+          "https://provost.duke.edu/pre-college-programs/"
+        ],
+        [
+          "初中組課程",
+          "https://provost.duke.edu/programs-initiatives/duke-pre-college-programs/duke-pre-college-middle-school-courses/"
         ]
       ]
     }
-  ]
+  ],
+  "more": {
+    "source": [
+      "Davidson Institute：Gifted Summer Programs Listed by Topics of Interest",
+      "https://www.davidsongifted.org/gifted-blog/gifted-summer-programs-listed-by-topics-of-interest/"
+    ],
+    "groups": [
+      {
+        "topic": "數學",
+        "items": [
+          [
+            "Epsilon Camp",
+            "https://epsiloncamp.org/",
+            "7–12 歲"
+          ],
+          [
+            "Campersand",
+            "https://campersand.org/",
+            "9–18 歲"
+          ],
+          [
+            "Colorado Math Camp",
+            "https://coloradomathcamp.com/",
+            "小學與初中"
+          ],
+          [
+            "VAMPY（Western Kentucky University）",
+            "https://www.wku.edu/gifted/vampy/index.php",
+            "讀完 7–10 年級"
+          ]
+        ]
+      },
+      {
+        "topic": "資優綜合",
+        "items": [
+          [
+            "Davidson Summer Programs",
+            "https://www.davidsongifted.org/gifted-programs/summer-opportunities/davidson-summer-programs/",
+            "8–13 歲"
+          ],
+          [
+            "Northwestern CTD",
+            "https://www.ctd.northwestern.edu/program_type/summer-programs",
+            "學前–12 年級"
+          ],
+          [
+            "Vanderbilt SAVY",
+            "https://pty.vanderbilt.edu/students/savy/",
+            "幼稚園–8 年級"
+          ],
+          [
+            "Vanderbilt Summer Academy",
+            "https://pty.vanderbilt.edu/students/vsa/",
+            "7–12 年級"
+          ],
+          [
+            "SCATS（Western Kentucky University）",
+            "https://www.wku.edu/gifted/scats/index.php",
+            "讀完 6–8 年級"
+          ],
+          [
+            "Berkeley ATDP",
+            "https://atdp.berkeley.edu/",
+            "中學部：讀完 7–11 年級"
+          ],
+          [
+            "Purdue GERI",
+            "https://www.education.purdue.edu/geri/youth-programs/",
+            "住宿：5–12 年級"
+          ],
+          [
+            "Exploration Summer Programs",
+            "https://explo.org/summer-programs",
+            "初中生"
+          ]
+        ]
+      },
+      {
+        "topic": "升學預備",
+        "items": [
+          [
+            "Joseph Baldwin Academy（Truman State）",
+            "http://jba.truman.edu/",
+            "讀完 7–9 年級"
+          ],
+          [
+            "Great Books Summer Program",
+            "https://greatbookssummer.com/immersive-precollege-program-lp/",
+            "升 6–8 年級"
+          ],
+          [
+            "Satori（Eastern Washington University）",
+            "https://inside.ewu.edu/satoricamp/",
+            "12–18 歲"
+          ]
+        ]
+      },
+      {
+        "topic": "工程、科學、藝術",
+        "items": [
+          [
+            "Girls Garage（女生）",
+            "https://girlsgarage.org/programs/summer/",
+            "9–12 歲"
+          ],
+          [
+            "Summer@IMSA",
+            "https://www.imsa.edu/site_section/summerimsa/",
+            "1–8 年級"
+          ],
+          [
+            "Interlochen Arts Camp",
+            "http://camp.interlochen.org/",
+            "3–12 年級，部分梯次 6–12 年級"
+          ],
+          [
+            "New York Film Academy 走讀營",
+            "https://www.nyfa.edu/summer-camps/",
+            "走讀：10–13 歲"
+          ]
+        ]
+      }
+    ]
+  }
 }

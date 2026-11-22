@@ -72,7 +72,7 @@
   .c-prev{background:var(--tbdbg);color:var(--tbd)}
   .type{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap;border:1px solid currentColor}
   .ty-open{color:#2f6f3e}.ty-early{color:#8a5a00}.ty-deadline{color:#b4532a}.ty-start{color:#2c5282}.ty-refund{color:#6b4c9a}
-  .camp-CTY{--cc:#2c5282}.camp-MathPath{--cc:#6b4c9a}.camp-TANG{--cc:#b4532a}
+  .camp-CTY{--cc:#2c5282}.camp-MathPath{--cc:#6b4c9a}.camp-Duke{--cc:#1f7a6d}
   .cpill{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--cc);padding:2px 9px;border-radius:999px;white-space:nowrap}
   .is-past{opacity:.45}
 
@@ -89,13 +89,21 @@
   .step .w{margin:4px 0;font-size:14px}
   .step .m{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
   .step .m .soon{color:var(--warn);font-weight:700}
+  .more{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .more-g{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .more-g h3{margin:0 0 8px;font-size:16px}
+  .more-g ul{margin:0;padding:0;list-style:none}
+  .more-g li{padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+  .more-g li:first-child{border-top:none}
+  .more-g a{color:var(--accent);font-weight:500}
+  .more-g small{display:block;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>2027 夏令營報名追蹤</h1>
-    <p>CTY · MathPath · TANG：適合 12 歲孩子的報名時程、費用與資格</p>
+    <p>CTY · MathPath · Duke：適合 12 歲孩子的報名時程、費用與資格</p>
     <div class="meta">
       <span>最後查核：<strong id="lastChecked"></strong></span>
       <span>每週自動重查官網</span>
@@ -121,6 +129,10 @@
     <span class="tag t-prev">參考去年</span> 2027 尚未公布，暫列 2026 數據
   </div>
 
+  <h2>更多營隊</h2>
+  <p class="intro" id="moreIntro"></p>
+  <div class="more" id="more"></div>
+
   <h2>更新紀錄</h2>
   <div class="log"><ul id="log"></ul></div>
 
@@ -129,25 +141,30 @@
 
 <script>
 const DATA = {
-  lastChecked: "2026-11-22",
+  lastChecked: "2026-11-23",
   log: [
-    "2026-11-22　建立頁面。CTY 2027 時程來自第三方整理（官網尚未上線）；MathPath 2027 申請資料尚未公布；TANG 2027 已公布日期 7/1–7/5，報名尚未開放。"
+    "2026-11-22　建立頁面。CTY 2027 時程來自第三方整理（官網尚未上線）；MathPath 2027 申請資料尚未公布；TANG 2027 已公布日期 7/1–7/5，報名尚未開放。",
+    "2026-11-23　拿掉 TANG，改放 Duke Pre-College（2027 日期與費用已公布，12 月開放報名）；新增 Davidson Institute 整理的其他營隊清單。"
   ],
   // 時間軸項目：date (YYYY-MM-DD)、camp、what、src: off | 3rd | prev
   timeline: [
     {date:"2026-12-01", approx:"12 月初", camp:"CTY", what:"2027 夏季課程開放報名", src:"3rd"},
     {date:"2027-02-28", camp:"MathPath", what:"全額付清折 $200（早鳥第一階段）", src:"prev"},
-    {date:"2027-04-10", camp:"TANG", what:"早鳥報名截止（住宿方案省 $50）", src:"prev"},
     {date:"2027-04-12", camp:"MathPath", what:"申請截止", src:"prev"},
     {date:"2027-04-15", camp:"MathPath", what:"全額付清折 $100（早鳥第二階段）", src:"prev"},
     {date:"2027-05-10", camp:"CTY", what:"Summer A 報名截止", src:"3rd"},
-    {date:"2027-05-29", camp:"TANG", what:"一般報名截止", src:"prev"},
     {date:"2027-05-31", camp:"MathPath", what:"取消可幾乎全額退費的期限", src:"prev"},
     {date:"2027-06-07", camp:"CTY", what:"Summer B 報名截止", src:"3rd"},
-    {date:"2027-06-12", camp:"TANG", what:"住宿方案逾期報名截止", src:"prev"},
     {date:"2027-06-27", camp:"CTY", what:"Summer A 開課（6/27–7/16）", src:"3rd"},
-    {date:"2027-07-01", camp:"TANG", what:"營隊開始（7/1–7/5）", src:"off"},
-    {date:"2027-07-18", camp:"CTY", what:"Summer B 開課（7/18–8/6）", src:"3rd"}
+    {date:"2027-07-18", camp:"CTY", what:"Summer B 開課（7/18–8/6）", src:"3rd"},
+    {date:"2026-12-01", approx:"12 月", camp:"Duke", what:"2027 夏季課程開放報名", src:"off"},
+    {date:"2027-04-01", camp:"Duke", what:"押金 $500 的最後一天（4/2 起押金變 $1,500）", src:"off", type:"early"},
+    {date:"2027-05-01", camp:"Duke", what:"取消只扣部分費用的最後一天（5/2 起取消收全額）", src:"off", type:"refund"},
+    {date:"2027-05-13", camp:"Duke", what:"第 1 梯次付清全額（開課前 30 天，沒付會被取消）", src:"off", type:"deadline"},
+    {date:"2027-06-01", camp:"Duke", what:"上傳疫苗證明截止", src:"off", type:"deadline"},
+    {date:"2027-06-12", camp:"Duke", what:"第 1 梯次開課（6/12–6/23）", src:"off"},
+    {date:"2027-06-27", camp:"Duke", what:"第 2 梯次開課（6/27–7/8）", src:"off"},
+    {date:"2027-07-12", camp:"Duke", what:"第 3 梯次開課（7/12–7/23）", src:"off"}
   ],
   camps: [
     {
@@ -183,22 +200,54 @@ const DATA = {
       links:[["MathPath 官網","https://www.mathpath.org/"],["申請方式","https://www.mathpath.org/apply/applynow/returning"],["學費與補助","https://www.mathpath.org/apply/financialaidtuition"]]
     },
     {
-      name:"TANG", full:"Taiwanese American Next Generation（台美下一代夏令營，家庭共同參加）",
-      status:"tbd", statusText:"2027 日期已公布，報名尚未開放",
+      name:"Duke", full:"Duke University Pre-College（原 Continuing Studies 夏季營隊，給 6–12 年級）",
+      status:"soon", statusText:"預計 2026 年 12 月開放報名",
       rows:[
-        ["開放報名","尚未公布",null,true],
-        ["報名截止","尚未公布。2026 年：早鳥 4/10、一般 5/29、逾期 6/12（住宿）；走讀一般 5/29、逾期 6/20","prev",true],
-        ["早鳥優惠","2026 年早鳥價比一般價便宜 $50；第一次參加的家庭另折 $50","prev"],
-        ["活動日期","2027/7/1–7/5（五天四夜）","off"],
-        ["費用","2026 年住宿方案（早鳥/一般/逾期）：Junior High $320 / $370 / $420；家長 $460 / $510 / $560；寢具包 $22","prev"],
-        ["地點","官網未明列。2026 年的貼文提到 WCU（賓州 West Chester University）","prev"],
-        ["名額","各組有上限，先到先得，額滿候補","off"],
-        ["資格","Junior High 組為 6–8 年級，依營隊前最後完成的年級分組"]
+        ["開放報名","2026 年 12 月。官網說正在更換付款系統，所以延後開放；可先填資料表，開放時會寄信通知","off",true],
+        ["報名截止","沒有公布截止日，額滿為止。開課前 30 天要付清全額","off",true],
+        ["早鳥優惠","沒有早鳥價。4/1 前報名押金 $500，4/2 起押金 $1,500（押金不退）","off"],
+        ["活動日期","第 1 梯次 6/12–6/23<br>第 2 梯次 6/27–7/8<br>第 3 梯次 7/12–7/23<br>每梯 8 個全天加 2 個半天，週末也上課","off"],
+        ["費用","住宿 $6,300；走讀 $4,550（只有初中組有走讀）。疫苗費約 $150–$250 另計。不提供個人獎學金","off"],
+        ["地點","北卡羅來納州 Durham 的 Duke University 校園","off"],
+        ["名額","官網未公布",null],
+        ["資格","現讀 6–8 年級，至少讀完一年初中；開課時滿 11 歲；GPA 3.0 以上。住宿要開課時滿 13 歲","off"]
       ],
-      note:"未滿 18 歲須由已報名的家長、監護人或 21 歲以上成人陪同，所以至少需要一位大人一起報名。Junior High 組不提供走讀。",
-      links:[["TANG 報名頁","https://www.tangeneration.org/registration"],["TANG 官網","https://www.tangeneration.org/"]]
+      note:"12 歲如果開課前還沒滿 13 歲，只能選走讀（早上 8:30 送到、下午 5:00 接回），所以家裡要住在 Durham 附近。2027 年沒有線上課程。初中組每梯次有 6 門課，例如 Mock Trial、Forensic Science、Engineering 101、Creative Writing。",
+      links:[["Duke Pre-College 官網","https://provost.duke.edu/pre-college-programs/"],["初中組課程","https://provost.duke.edu/programs-initiatives/duke-pre-college-programs/duke-pre-college-middle-school-courses/"]]
     }
-  ]
+  ],
+  more: {
+    source: ["Davidson Institute：Gifted Summer Programs Listed by Topics of Interest","https://www.davidsongifted.org/gifted-blog/gifted-summer-programs-listed-by-topics-of-interest/"],
+    groups: [
+      {topic:"數學", items:[
+        ["Epsilon Camp","https://epsiloncamp.org/","7–12 歲"],
+        ["Campersand","https://campersand.org/","9–18 歲"],
+        ["Colorado Math Camp","https://coloradomathcamp.com/","小學與初中"],
+        ["VAMPY（Western Kentucky University）","https://www.wku.edu/gifted/vampy/index.php","讀完 7–10 年級"]
+      ]},
+      {topic:"資優綜合", items:[
+        ["Davidson Summer Programs","https://www.davidsongifted.org/gifted-programs/summer-opportunities/davidson-summer-programs/","8–13 歲"],
+        ["Northwestern CTD","https://www.ctd.northwestern.edu/program_type/summer-programs","學前–12 年級"],
+        ["Vanderbilt SAVY","https://pty.vanderbilt.edu/students/savy/","幼稚園–8 年級"],
+        ["Vanderbilt Summer Academy","https://pty.vanderbilt.edu/students/vsa/","7–12 年級"],
+        ["SCATS（Western Kentucky University）","https://www.wku.edu/gifted/scats/index.php","讀完 6–8 年級"],
+        ["Berkeley ATDP","https://atdp.berkeley.edu/","中學部：讀完 7–11 年級"],
+        ["Purdue GERI","https://www.education.purdue.edu/geri/youth-programs/","住宿：5–12 年級"],
+        ["Exploration Summer Programs","https://explo.org/summer-programs","初中生"]
+      ]},
+      {topic:"升學預備", items:[
+        ["Joseph Baldwin Academy（Truman State）","http://jba.truman.edu/","讀完 7–9 年級"],
+        ["Great Books Summer Program","https://greatbookssummer.com/immersive-precollege-program-lp/","升 6–8 年級"],
+        ["Satori（Eastern Washington University）","https://inside.ewu.edu/satoricamp/","12–18 歲"]
+      ]},
+      {topic:"工程、科學、藝術", items:[
+        ["Girls Garage（女生）","https://girlsgarage.org/programs/summer/","9–12 歲"],
+        ["Summer@IMSA","https://www.imsa.edu/site_section/summerimsa/","1–8 年級"],
+        ["Interlochen Arts Camp","http://camp.interlochen.org/","3–12 年級，部分梯次 6–12 年級"],
+        ["New York Film Academy 走讀營","https://www.nyfa.edu/summer-camps/","走讀：10–13 歲"]
+      ]}
+    ]
+  }
 };
 
 const SRC = {off:['官方','t-off'],'3rd':['第三方','t-3rd'],prev:['參考去年','t-prev']};
@@ -217,7 +266,7 @@ const typeTag = t => `<span class="type ${TYPES[t][1]}">${TYPES[t][0]}</span>`;
 const EVENTS = DATA.timeline.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{
   const d = new Date(e.date+'T00:00:00');
   const days = Math.round((d - today)/86400000);
-  return {...e, d, days, type: typeOf(e.what), label: e.approx ? `${d.getFullYear()} 年 ${e.approx}` : `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`,
+  return {...e, d, days, type: e.type || typeOf(e.what), label: e.approx ? `${d.getFullYear()} 年 ${e.approx}` : `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`,
     past: days < 0 && !e.approx,
     left: e.approx && days < 0 ? '即將開始' : days < 0 ? '已過' : days === 0 ? '就是今天' : `還有 ${days} 天`};
 });
@@ -249,6 +298,11 @@ DATA.camps.forEach(c=>{
     <div class="links">${c.links.map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]} ↗</a>`).join('')}</div>`;
   cards.appendChild(el);
 });
+
+// more programs
+const M = DATA.more;
+document.getElementById('moreIntro').innerHTML = `以下挑自 <a href="${M.source[1]}" target="_blank" rel="noopener">${M.source[0]} ↗</a> 裡適合 12 歲左右的營隊。這份清單是家長和專業人士推薦整理，Davidson 不背書；文章刊於 2023 年，報名前請到各營隊官網確認 2027 年的資訊。`;
+document.getElementById('more').innerHTML = M.groups.map(g=>`<div class="more-g"><h3>${g.topic}</h3><ul>${g.items.map(i=>`<li><a href="${i[1]}" target="_blank" rel="noopener">${i[0]} ↗</a><small>${i[2]}</small></li>`).join('')}</ul></div>`).join('');
 
 // log
 document.getElementById('log').innerHTML = DATA.log.slice().reverse().map(x=>`<li>${x}</li>`).join('');
