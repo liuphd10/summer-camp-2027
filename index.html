@@ -57,6 +57,35 @@
     .tl-row .tl-what{grid-column:1 / -1}
     .tl-row .tl-left{grid-column:1 / -1}
   }
+
+  .vbar{background:#1f2328;color:#fff;border-radius:10px;padding:10px 14px;margin-bottom:22px;font-size:14px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+  .vbar b{font-size:15px}
+  .vbar a{color:#cfe3dc}
+  .intro{margin:-4px 0 14px;color:var(--muted);font-size:14px}
+  .legend2{font-size:13px;color:var(--muted);margin-top:10px;line-height:2}
+  .cert{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;font-weight:500;white-space:nowrap}
+  .c-off{background:var(--okbg);color:var(--ok)}
+  .c-3rd{background:var(--bluebg);color:var(--blue)}
+  .c-prev{background:var(--tbdbg);color:var(--tbd)}
+  .type{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap;border:1px solid currentColor}
+  .ty-open{color:#2f6f3e}.ty-early{color:#8a5a00}.ty-deadline{color:#b4532a}.ty-start{color:#2c5282}.ty-refund{color:#6b4c9a}
+  .camp-CTY{--cc:#2c5282}.camp-MathPath{--cc:#6b4c9a}.camp-TANG{--cc:#b4532a}
+  .cpill{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--cc);padding:2px 9px;border-radius:999px;white-space:nowrap}
+  .is-past{opacity:.45}
+
+  .bycamp{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .col{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .col-h{background:var(--cc);color:#fff;padding:12px 16px}
+  .col-h h3{margin:0;font-size:20px}
+  .col-h .nx{font-size:13px;opacity:.9}
+  .steps{list-style:none;margin:0;padding:8px 16px 14px;position:relative}
+  .step{position:relative;padding:12px 0 12px 26px;border-left:2px solid var(--line);margin-left:6px}
+  .step:last-child{border-left-color:transparent}
+  .step::before{content:"";position:absolute;left:-8px;top:16px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--cc)}
+  .step .d{font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+  .step .w{margin:4px 0;font-size:14px}
+  .step .m{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px;color:var(--muted)}
+  .step .m .soon{color:var(--warn);font-weight:700}
 </style>
 </head>
 <body>
@@ -71,9 +100,15 @@
     </div>
   </header>
 
-  <h2>重要日期時間軸</h2>
-  <div class="timeline" id="timeline"></div>
-  <div class="legend">標示「參考去年」的日期是 2026 年的時程，2027 年公布後會更新。灰色是已過的日期。</div>
+  <h2>重要日期</h2>
+  <p class="intro">每個營隊從開放報名到開營的步驟，由上往下依時間排列。</p>
+  <div class="bycamp" id="timeline"></div>
+  <div class="legend2">
+    <b>怎麼看：</b>
+    <span class="cert c-off">已確定</span> 官網已公布
+    <span class="cert c-3rd">預估</span> 其他網站整理，官網還沒公布
+    <span class="cert c-prev">暫用去年</span> 2027 還沒公布，先放 2026 年的日期
+  </div>
 
   <h2>營隊明細</h2>
   <div class="cards" id="cards"></div>
@@ -170,19 +205,33 @@ const fmt = d => `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
 document.getElementById('today').textContent = fmt(today);
 document.getElementById('lastChecked').textContent = DATA.lastChecked.replace(/-/g,'/');
 
-// timeline
-const tl = document.getElementById('timeline');
-DATA.timeline.slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>{
+
+const TYPES = {open:['開放報名','ty-open'], early:['早鳥優惠','ty-early'], deadline:['報名截止','ty-deadline'], start:['營隊開始','ty-start'], refund:['退費期限','ty-refund']};
+const typeOf = w => /開放報名/.test(w) ? 'open' : /折|早鳥/.test(w) ? 'early' : /退費/.test(w) ? 'refund' : /截止/.test(w) ? 'deadline' : 'start';
+const CERT = {off:['已確定','c-off'],'3rd':['預估','c-3rd'],prev:['暫用去年','c-prev']};
+const cert = s => CERT[s] ? `<span class="cert ${CERT[s][1]}">${CERT[s][0]}</span>` : '';
+const typeTag = t => `<span class="type ${TYPES[t][1]}">${TYPES[t][0]}</span>`;
+const EVENTS = DATA.timeline.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(e=>{
   const d = new Date(e.date+'T00:00:00');
   const days = Math.round((d - today)/86400000);
-  const label = e.approx ? e.approx : fmt(d);
-  let left = days<0 ? '已過' : days===0 ? '今天' : `還有 ${days} 天`;
-  const row = document.createElement('div');
-  row.className = 'tl-row' + (days<0 && !e.approx ? ' past':'');
-  row.innerHTML = `<div class="tl-date">${label}</div><div class="tl-camp">${e.camp}</div>
-    <div class="tl-what">${e.what} ${tag(e.src)}</div>
-    <div class="tl-left ${days>=0 && days<=30 ? 'soon':''}">${e.approx && days<0 ? '即將開放' : left}</div>`;
-  tl.appendChild(row);
+  return {...e, d, days, type: typeOf(e.what), label: e.approx ? `${d.getFullYear()} 年 ${e.approx}` : `${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`,
+    past: days < 0 && !e.approx,
+    left: e.approx && days < 0 ? '即將開始' : days < 0 ? '已過' : days === 0 ? '就是今天' : `還有 ${days} 天`};
+});
+
+const tl = document.getElementById('timeline');
+DATA.camps.forEach(c=>{
+  const evs = EVENTS.filter(e=>e.camp===c.name);
+  const next = evs.find(e=>!e.past);
+  const col = document.createElement('div');
+  col.className = 'col camp-'+c.name;
+  col.innerHTML = `<div class="col-h"><h3>${c.name}</h3><div class="nx">下一步：${next ? next.label+' '+TYPES[next.type][0] : '無'}</div></div>
+    <ol class="steps">${evs.map(e=>`<li class="step ${e.past?'is-past':''}">
+      <div class="d">${e.label}</div>
+      <div class="w">${e.what}</div>
+      <div class="m">${typeTag(e.type)} ${cert(e.src)} <span class="${e.days>=0&&e.days<=30?'soon':''}">${e.left}</span></div>
+    </li>`).join('')}</ol>`;
+  tl.appendChild(col);
 });
 
 // cards
